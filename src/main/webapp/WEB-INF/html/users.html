@@ -1,0 +1,68 @@
+﻿<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Управление пользователями | WebQuiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+    <script th:src="@{/resources/js/users.js}"></script>
+</head>
+
+<body>
+    <header class="bg-dark">
+        <div class="container">
+            <div class="row text-light align-items-center justify-content-between">
+                <div class="col-4">
+                    <h1>WebQuiz</h1>
+                </div>
+                <div class="col-6 text-end">
+                    <button class="btn btn-primary">Что-то будет</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="section justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <div class="card">
+                        <table id="tab">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>email</th>
+                                    <th>username</th>
+                                    <th>Бан</th>
+                                    <th>Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${userList}">
+                                    <td th:text="${user.id}">
+                                    <td th:text="${user.email}">
+                                    <td th:text="${user.username}">
+                                    <td th:text="${user.ban} ? 'Да' : 'Нет'">
+                                    <td><a class="btn" th:href="@{/setban(id=${user.id},ban=${user.ban})}" th:value="${user.ban}">Разбанить/забанить</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="py-2 bg-dark text-light">
+        <div class="container text-center">
+            <p class="small">Copyright
+                <script>document.write(new Date().getFullYear())</script> &copy; <a href="#">MM</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
