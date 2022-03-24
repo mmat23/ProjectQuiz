@@ -1,5 +1,7 @@
 package tesis.webquiz.model;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 import lombok.Getter;
@@ -27,4 +29,7 @@ public class QuizUser{
     private String role = "USER";
 
     private Boolean ban = false;
+
+    @OneToMany(mappedBy = "quizUser", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 }

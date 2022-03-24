@@ -21,13 +21,6 @@ public class WebConf implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    // @Override
-    // public void addViewControllers(ViewControllerRegistry registry) {
-    // registry.addViewController("/login").setViewName("login");
-    // registry.addViewController("/auth").setViewName("auth");
-    // registry.addViewController("/reg").setViewName("reg");
-    // }
-
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();

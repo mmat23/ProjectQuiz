@@ -9,18 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
 </head>
 <body>
-    <header class="bg-dark">
-        <div class="container">
-            <div class="row text-light align-items-center justify-content-between">
-                <div class="col-4">
-                    <h1>WebQuiz</h1>
-                </div>
-                <div class="col-6 text-end">
-                    <button class="btn btn-primary">Что-то будет</button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <header th:insert="temps::header"></header>
     <section class="section justify-content-center">
         <div class="container">
             <div class="row justify-content-center">
@@ -42,13 +31,7 @@
             </div>
         </div>
     </section>
-    <footer class="py-2 bg-dark text-light">
-        <div class="container text-center">
-            <p class="small">Copyright
-                <script>document.write(new Date().getFullYear())</script> &copy; <a href="#">MM</a>
-            </p>
-        </div>
-    </footer>
+    <footer th:insert="temps::footer"></footer>
 </body>
 
 </html>

@@ -18,10 +18,13 @@ public class Quiz{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private String theme;
+    private String subject;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private Set<Question> questions;
+
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 }

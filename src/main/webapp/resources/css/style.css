@@ -22,3 +22,9 @@ body {
   flex: 1;
   padding: 10px 0;
 }
+
+.signin-reg{
+  text-decoration: none;
+  text-align: center;
+  color: darkgreen;
+}
