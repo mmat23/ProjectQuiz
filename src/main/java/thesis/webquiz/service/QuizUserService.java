@@ -1,5 +1,5 @@
 
-package tesis.webquiz.service;
+package thesis.webquiz.service;
 
 import java.util.List;
 
@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import tesis.webquiz.model.QuizUser;
-import tesis.webquiz.repository.QuizUserRepository;
-import tesis.webquiz.service.QuizUserService;
+import thesis.webquiz.model.QuizUser;
+import thesis.webquiz.repository.QuizUserRepository;
 
 @Service
 public class QuizUserService  {

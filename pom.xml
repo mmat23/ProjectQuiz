@@ -7,9 +7,9 @@
 		<version>2.6.3</version>
 		<relativePath />
 	</parent>
-	<groupId>tesis</groupId>
+	<groupId>thesis</groupId>
 	<artifactId>webquiz</artifactId>
-	<version>0.3.5</version>
+	<version>0.5.4</version>
 	<packaging>war</packaging>
 	<name>webquiz</name>
 	<description>Веб-приложение для курс. работы (Spring + ThymeLeaf + MySQL)</description>

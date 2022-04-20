@@ -1,4 +1,4 @@
-package tesis.webquiz.model;
+package thesis.webquiz.model;
 
 import javax.persistence.*;
 
@@ -15,6 +15,8 @@ public class Answer {
     private Long id;
 
     private String text;
+
+    private Boolean isTrue = false;
 
     @ManyToOne
     @JoinColumn(name = "question_id")

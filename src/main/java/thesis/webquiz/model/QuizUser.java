@@ -1,6 +1,6 @@
-package tesis.webquiz.model;
+package thesis.webquiz.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -31,5 +31,5 @@ public class QuizUser{
     private Boolean ban = false;
 
     @OneToMany(mappedBy = "quizUser", cascade = CascadeType.ALL)
-    private Set<Comment> comments;
+    private List<Comment> comments;
 }

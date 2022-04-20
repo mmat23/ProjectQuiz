@@ -1,8 +1,8 @@
-package tesis.webquiz;
+package thesis.webquiz;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import tesis.webquiz.config.*;
+import thesis.webquiz.config.*;
 
 public class ServerInitializer extends AbstractAnnotationConfigDispatcherServletInitializer  {
 

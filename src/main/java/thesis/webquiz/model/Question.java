@@ -1,6 +1,6 @@
-package tesis.webquiz.model;
+package thesis.webquiz.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -24,5 +24,5 @@ public class Question {
     private Quiz quiz;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private Set<Answer> answers;
+    private List<Answer> answers;
 }

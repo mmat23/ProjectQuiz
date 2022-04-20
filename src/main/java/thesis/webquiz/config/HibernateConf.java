@@ -1,4 +1,4 @@
-package tesis.webquiz.config;
+package thesis.webquiz.config;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "tesis.webquiz")
+@ComponentScan(basePackages = "thesis.webquiz")
 @EnableTransactionManagement
 @PropertySource(value = "classpath:application.properties")
 public class HibernateConf {
@@ -32,7 +32,6 @@ public class HibernateConf {
         return properties;
     }
 
-    @Bean(name = "entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());

@@ -1,11 +1,11 @@
-package tesis.webquiz.service;
+package thesis.webquiz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-import tesis.webquiz.model.QuizUser;
-import tesis.webquiz.repository.QuizUserRepository;
+import thesis.webquiz.model.QuizUser;
+import thesis.webquiz.repository.QuizUserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

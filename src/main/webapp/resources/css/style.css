@@ -18,13 +18,26 @@ body {
 }
 
 .section {
-  background-color: var(--soft-blue);
   flex: 1;
   padding: 10px 0;
+  background-image: url(../img/background.png);
+  background-repeat: repeat;
+  background-size: contain;
+  background-attachment: fixed;
 }
 
 .signin-reg{
   text-decoration: none;
   text-align: center;
   color: darkgreen;
+}
+
+.form-btn {
+  background-color: var(--soft-blue);
+  border-color: var(--soft-blue);
+  color: black;
+}
+
+.btn{
+  border-radius: 20px;
 }

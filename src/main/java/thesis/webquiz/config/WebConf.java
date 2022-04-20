@@ -1,4 +1,4 @@
-package tesis.webquiz.config;
+package thesis.webquiz.config;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
@@ -10,7 +10,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @EnableWebMvc
-@ComponentScan(basePackages = "tesis.webquiz")
+@ComponentScan(basePackages = "thesis.webquiz")
 @Configuration
 public class WebConf implements WebMvcConfigurer {
 

@@ -1,4 +1,4 @@
-package tesis.webquiz.model;
+package thesis.webquiz.model;
 
 import java.util.Date;
 
