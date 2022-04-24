@@ -1,5 +1,6 @@
 package thesis.webquiz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,10 +20,13 @@ public class Question {
 
     private String text;
 
+    @Transient
+    private Integer correctAnsIndex;
+
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<Answer>();
 }

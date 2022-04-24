@@ -15,8 +15,8 @@ public class Statistics {
     private Long id;
 
     private Long countPlayed = (long) 0;
-
-    private Long rightAnswers = (long) 0;
+    
+    private Double avgResult = 0.0;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_id")

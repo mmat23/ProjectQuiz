@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import thesis.webquiz.model.QuizUser;
 
 public interface QuizUserRepository extends JpaRepository<QuizUser, Long> {
-    public QuizUser findByEmail(String email);
+    QuizUser findByEmail(String email);
 
     @Transactional
     @Modifying
     @Query("update QuizUser u set u.ban=?1 where u.id=?2")
-    public void setBanById(Boolean ban, Long id);
+    void setBanById(Boolean ban, Long id);
 }

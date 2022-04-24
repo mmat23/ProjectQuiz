@@ -16,11 +16,11 @@
                 <div class="col-6">
                     <div class="card">
                         <div class="card-header">Авторизация</div>
-                        <div class="container p-4">
-                            <form class="row row-cols-1 g-3" th:action="@{/login}" method="POST">
+                        <div class="card-body">
+                            <form class="row g-3" th:action="@{/login}" method="POST">
                                 <div class="alert alert-warning" th:if="${msg != null}" th:text="${msg}">Blah</div>
-                                <input name="username" type="email" class="form-control" placeholder="Email*" required>
-                                <input name="password" type="password" class="form-control" placeholder="Пароль*" required>
+                                <input class="form-control" name="username" type="email" placeholder="Email*" required>
+                                <input class="form-control" name="password" type="password" placeholder="Пароль*" required>
                                 <button class="btn btn-primary btn-block" type="submit">Войти</button>
                                 <a th:href="@{/registration}" class="signin-reg">Может вы хотите зарегистрироваться?</a>
                             </form>

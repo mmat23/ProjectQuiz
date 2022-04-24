@@ -1,5 +1,6 @@
 package thesis.webquiz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -24,15 +25,18 @@ public class Quiz {
     @Transient
     private List<Long> choosedOptions;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
-    private List<Question> questions;
+    @Transient
+    private Integer quesCount;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    private List<Question> questions = new ArrayList<Question>();
+
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<Comment>();
 
     @OneToOne(mappedBy = "quiz")
     private Statistics statistics;
 
     @ManyToMany(mappedBy = "quizzes")
-    private List<Subject> subjects;
+    private List<Subject> subjects = new ArrayList<Subject>();
 }

@@ -21,8 +21,7 @@
                     <div class="card border-2 border-success">
                         <div class="card-body">
                             <h1>Результаты викторины "<span th:text="${title}"></span>"</h1>
-                            <p>Правильные ответы: <span th:text="${ansRight}"></span> </p>
-                            <p>Неправильные ответы: <span th:text="${ansWrong}"></span> </p>
+                            <p><span th:text="${ansRight}"></span>/<span th:text="${count}"></span></p>
                         </div>
                     </div>
                 </div>
@@ -31,5 +30,4 @@
     </section>
     <footer th:insert="temps::footer"></footer>
 </body>
-
 </html>

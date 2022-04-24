@@ -1,5 +1,6 @@
 package thesis.webquiz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -22,5 +23,5 @@ public class Subject {
     @JoinTable(name = "quiz_subject",
         joinColumns = @JoinColumn(name = "subject_id"),
         inverseJoinColumns = @JoinColumn(name = "quiz_id"))
-    private List<Quiz> quizzes;
+    private List<Quiz> quizzes = new ArrayList<Quiz>();
 }

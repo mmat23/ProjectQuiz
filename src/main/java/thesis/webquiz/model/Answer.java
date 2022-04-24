@@ -16,7 +16,7 @@ public class Answer {
 
     private String text;
 
-    private Boolean isTrue = false;
+    private Boolean correct = false;
 
     @ManyToOne
     @JoinColumn(name = "question_id")

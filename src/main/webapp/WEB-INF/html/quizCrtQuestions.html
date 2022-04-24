@@ -15,19 +15,29 @@
 <body>
     <header th:insert="temps::header"></header>
     <section class="section justify-content-center">
-        <form th:action="@{/quizResult}" method="POST" class="container">
+        <form th:action="@{/quizSave}" method="POST" class="container">
             <th:block th:each="ques, i: ${quiz.questions}">
                 <div class="row justify-content-center pb-4">
                     <div class="col-6">
                         <div class="card border-danger border-3">
                             <div class="card-body">
-                                <p th:text="${ques.text}"></p>
-                                <th:block th:each="ans : ${ques.answers}">
+                                <div class="row g-3">
                                     <div>
-                                        <input type="radio" th:name="|choosedOptions[${i.index}]|" th:value="${ans.id}" required>
-                                        <label th:text="${ans.text}"></label>
+                                        <label class="form-label">Введите текст вопроса</label>
+                                        <textarea class="form-control" th:name="|questions[${i.index}].text|" placeholder="Пишите" style="height: 100px; resize: none;" required></textarea>
                                     </div>
-                                </th:block>
+                                    <div>
+                                        <label class="form-label">Введите текст ответов и выберите правильный</label>
+                                        <th:block th:each="ans, j: ${ques.answers}">
+                                            <div class="input-group">
+                                                <div class="input-group-text">
+                                                    <input class="form-check-input" th:name="|questions[${i.index}].correctAnsIndex|" type="radio" th:value="${j.index}" required />
+                                                </div>
+                                                <input class="form-control" th:name="|questions[${i.index}].answers[${j.index}].text|" required>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -35,8 +45,6 @@
             </th:block>
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <input type="hidden" name="id" th:value="${quiz.id}">
-                    <input type="hidden" name="title" th:value="${quiz.title}">
                     <input class="btn btn-primary" type="submit" value="Отправить ответы">
                 </div>
             </div>
