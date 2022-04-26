@@ -72,7 +72,7 @@ public class QuizService {
         }
         Statistics stat = new Statistics();
         stat.setQuiz(quiz);
-        quiz.quizRepos(stat);
+        quiz.setStatistics(stat);
         statRepos.save(stat);
         return true;
     }

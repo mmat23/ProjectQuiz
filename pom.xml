@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>thesis</groupId>
 	<artifactId>webquiz</artifactId>
-	<version>0.7.3</version>
+	<version>0.7.5</version>
 	<packaging>war</packaging>
 	<name>webquiz</name>
 	<description>Веб-приложение для курс. работы (Spring + ThymeLeaf + MySQL)</description>
