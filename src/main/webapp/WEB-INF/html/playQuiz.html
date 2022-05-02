@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Викторина | WebQuiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+</head>
+
+<body>
+    <header th:insert="temps::header"></header>
+    <section class="section justify-content-center">
+        <form th:action="@{/playQuiz}" method="POST" class="container">
+            <th:block th:each="ques, i: ${quiz.questions}">
+                <div class="row justify-content-center pb-4">
+                    <div class="col-6">
+                        <div class="card border-danger border-3">
+                            <div class="card-body">
+                                <p th:text="${ques.text}"></p>
+                                <th:block th:each="ans : ${ques.answers}">
+                                    <div>
+                                        <input type="radio" th:name="|choosedOptions[${i.index}]|" th:value="${ans.id}" required>
+                                        <label th:text="${ans.text}"></label>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <input type="hidden" name="id" th:value="${quiz.id}">
+                    <input type="hidden" name="title" th:value="${quiz.title}">
+                    <input class="btn btn-primary" type="submit" value="Отправить ответы">
+                </div>
+            </div>
+        </form>
+    </section>
+    <footer th:insert="temps::footer"></footer>
+</body>
+
+</html>

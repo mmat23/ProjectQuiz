@@ -28,6 +28,10 @@ public class Quiz {
     @Transient
     private Integer quesCount;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private QuizUser user;
+
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<Question>();
 

@@ -2,45 +2,154 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Викторина | WebQuiz</title>
+    <title>Авторизация | WebQuiz</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
 </head>
 
 <body>
     <header th:insert="temps::header"></header>
     <section class="section justify-content-center">
-        <form th:action="@{/quizResult}" method="POST" class="container">
-            <th:block th:each="ques, i: ${quiz.questions}">
-                <div class="row justify-content-center pb-4">
-                    <div class="col-6">
-                        <div class="card border-danger border-3">
-                            <div class="card-body">
-                                <p th:text="${ques.text}"></p>
-                                <th:block th:each="ans : ${ques.answers}">
-                                    <div>
-                                        <input type="radio" th:name="|choosedOptions[${i.index}]|" th:value="${ans.id}" required>
-                                        <label th:text="${ans.text}"></label>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <div th:insert="temps::admin-navbar"></div>
+                </div>
+                <div class="col-10">
+                    <div class="card my-2">
+                        <div class="card-header" th:text="quiz.title"></div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Автор: <span class="text-primary"
+                                        th:text="${quiz.user.username}"></span></li>
+                                <li class="list-group-item">Темы: <span th:text="${quiz.subjects[0].name}"></span>,
+                                    <span th:text="${quiz.subjects[1].name}"></span>
+                                </li>
+                                <li class="list-group-item">Рейтинг: <span th:if="${avgRating}" th:text="|${#numbers.formatDecimal(avgRating,1,1)}/5|"><span th:unless="${avgRating}">будет показана поже</span></li>
+                                <li class="list-group-item">Кол-во вопросов: <span
+                                        th:text="${#lists.size(quiz.questions)}"></span></li>
+                                <li class="list-group-item"><a class="btn btn-success mx-6">Поехали!</a><a
+                                        class="btn btn-warning">Подробная информация</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center px-0 mx-0 g-0">
+                        <div class="col-lg-10 w-100">
+                            <div class="card text-dark">
+                                <div class="card-body">
+                                    <h4 class="mb-0">Отзывы</h4>
+                                    <p class="fw-light mb-4 pb-2">Последние отзывы от пользователей</p>
+                                    <form th:action="@{/makeComment}" method="POST" th:if="${comForm}" th:object="${comForm}">
+                                        <h5>Оставьте свой отзыв</h5>
+                                        <div class="row g-3">
+                                            <div>
+                                                <textarea class="form-control" name="text" placeholder="Текст"
+                                                    style="height: 150px; resize: none;" required></textarea>
+                                            </div>
+                                            <div>
+                                                <label class="form-label">Дайте оценку</label>
+                                                <input type="range" name="rating" id="rating" min="1.0" max="5.0"
+                                                    step="0.1" value="1.0" oninput="res.value = rating.value" />
+                                                <output id="res">1.0</output>
+                                                <input type="hidden" th:value="${quiz.id}" name="quiz.id">
+                                                <input class="btn btn-primary" type="Submit" value="Оставить отзыв">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <hr class="my-0" />
+
+                                <div class="card-body p-4">
+                                    <div class="d-flex flex-start">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">idontknower</h6>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <p class="mb-0">
+                                                    апрель 1, 2022
+                                                </p>
+                                            </div>
+                                            <p class="mb-0">
+                                                И это называется викториной? да кто автор вообще такой?! викторина
+                                                вообще по своей сути отнюдь не логична. ответы вообще слабо свзязаны с
+                                                вопросами. знание истории бутана (или чего там) у автора вообще не
+                                                зашкаливает. стыдно
+                                            </p>
+                                            <p>0/5</p>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <hr class="my-0" />
+
+                                <th:block th:each="com : ${quiz.comments}">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex flex-start">
+                                            <div>
+                                                <h6 class="fw-bold mb-1" th:text="${com.user.username}"></h6>
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <p class="mb-0"
+                                                        th:text="${#temporals.format(com.date,'LLLL dd, yyyy')}"></p>
+                                                </div>
+                                                <p class="mb-0" th:text="${com.text}"></p>
+                                                <p th:text="|${#numbers.formatDecimal(com.rating,1,1)}/5|"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-0" />
                                 </th:block>
+
+                                <div class="card-body p-4">
+                                    <div class="d-flex flex-start">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">admin</h6>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <p class="mb-0">
+                                                    март 25, 2022
+                                                </p>
+                                            </div>
+                                            <p class="mb-0">
+                                                Эта викторина идеал идеалов из всех шедевров. Знанию истории и чуткости
+                                                автора в вопросах истории Японии и периода Сэнгоку можно лишь
+                                                позавидовать. Эта викторина - вершина логики и организации из всех
+                                                викторин. Рекомендую всем.
+                                            </p>
+                                            <p>5/5</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-0" />
+
+                                <div class="card-body p-4">
+                                    <div class="d-flex flex-start">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">kolya_nevolya</h6>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <p class="mb-0">
+                                                    март 27, 2022
+                                                </p>
+                                            </div>
+                                            <p class="mb-0">
+                                                Викторинка норм такая. Я хоть узнал что-то новое об истории японии. Не
+                                                слишком интересно, но норм.
+                                            </p>
+                                            <p>4/5</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-0" />
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </th:block>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <input type="hidden" name="id" th:value="${quiz.id}">
-                    <input type="hidden" name="title" th:value="${quiz.title}">
-                    <input class="btn btn-primary" type="submit" value="Отправить ответы">
-                </div>
             </div>
-        </form>
+        </div>
     </section>
     <footer th:insert="temps::footer"></footer>
 </body>

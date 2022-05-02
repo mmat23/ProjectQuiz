@@ -31,6 +31,9 @@ public class QuizUser{
 
     private Boolean ban = false;
 
-    @OneToMany(mappedBy = "quizUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Quiz> quizzes = new ArrayList<Quiz>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<Comment>();
 }

@@ -11,32 +11,26 @@ window.onload = function () {
             this.textContent = "Обновить формы";
             let el = document.createElement("div");
             el.innerHTML = '<div class="row justify-content-center pb-3"><div class="col-6"><div class="card"><div class="card-body text-center"><h6>Заполните вопросы ниже</h6></div></div></div></div>';
-            cardsDiv.parentElement.insertBefore(el, cardsDiv);
+            cardsDiv.parentElement.insertBefore(el.firstChild, cardsDiv);
             el = document.createElement("div");
             el.innerHTML = '<div class="row justify-content-center pb-3"><div class="col-auto"><input class="btn btn-primary" type="submit" value="Начать заполнение вопросов" /></div></div>';
-            cardsDiv.parentElement.append(el);
+            cardsDiv.parentElement.append(el.firstChild);
             isAdded = true;
         }
         if (count > countCards) {
             for (let i = countCards; i < count; i++) {
                 let copy = template.content.cloneNode(true);
                 let area = copy.querySelector('textarea');
-                let name = area.getAttribute('name');
-                area.setAttribute('name', name.replace(/#/, i));
+                area.name = area.name.replace(/#/, i);
                 let input = copy.querySelector('.input-group');
                 for (let j = 0; j < 3; j++) {
-                    let input2 = input.cloneNode(true);
-                    input.parentElement.append(input2);
+                    input.parentElement.append(input.cloneNode(true));
                 }
                 let groups = copy.querySelectorAll('.input-group');
                 groups.forEach((el, j) => {
                     let inputs = el.querySelectorAll('input');
-                    let name = inputs[0].getAttribute('name');
-                    inputs[0].setAttribute('name', name.replace(/#/, i));
-                    inputs[0].value = j;
-                    name = inputs[1].getAttribute('name');
-                    name = name.replace(/#/, i);
-                    inputs[1].setAttribute('name', name.replace(/&/, j));
+                    inputs[0].name = inputs[0].name.replace(/#/, i);
+                    inputs[1].name = inputs[1].name.replace(/#/, i).replace(/&/, j);
                 });
                 cardsDiv.append(copy);
             }

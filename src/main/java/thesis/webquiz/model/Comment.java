@@ -1,6 +1,6 @@
 package thesis.webquiz.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.*;
 
@@ -18,13 +18,13 @@ public class Comment {
 
     private String text;
 
-    private Date date;
+    private LocalDate date;
 
     private Double rating;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private QuizUser quizUser;
+    private QuizUser user;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")

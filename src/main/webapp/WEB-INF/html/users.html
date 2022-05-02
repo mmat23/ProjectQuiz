@@ -36,7 +36,7 @@
                                     <td th:text="${user.email}">
                                     <td th:text="${user.username}">
                                     <td th:text="${user.ban} ? 'Да' : 'Нет'">
-                                    <td><a class="btn" th:href="@{/setban(id=${user.id},ban=${user.ban})}" th:value="${user.ban}" th:text="${user.ban} ? 'Разбанить' : 'Забанить'"></a></td>
+                                    <td><a class="btn" th:href="@{/admin/setban(id=${user.id},ban=${user.ban})}" th:value="${user.ban}" th:text="${user.ban} ? 'Разбанить' : 'Забанить'"></a></td>
                                 </tr>
                             </tbody>
                         </table>
