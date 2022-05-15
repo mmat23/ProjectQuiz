@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Мои викторины | WebQuiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+    <script type="text/javascript" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/chart.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/statChart.js}"></script>
+</head>
+
+<body>
+    <header th:insert="temps::header"></header>
+    <section class="section justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-7">
+                    <a class="btn btn-success w-100" th:href="@{/quiz/create}">Создать викторину</a>
+                </div>
+            </div>
+            <div class="row justify-content-center" th:if="${#lists.size(quizzes) == 0}">
+                <div class="col-7">
+                    <div class="card my-2">
+                        <div class="card-body">
+                            Вы пока не создали ни одной викторины
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <th:block th:each="quiz : ${quizzes}">
+                <div class="row justify-content-center">
+                    <div class="col-7">
+                        <div class="card my-2">
+                            <div class="card-header"><a th:text="${quiz.title}" th:href="@{/quiz/show(id=${quiz.id})}"></a></div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        Темы: <span th:text="${#strings.listJoin(quiz.subjects.![name], ', ')}"></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        Дата создания: <span
+                                            th:text="${#temporals.format(quiz.date,'LLLL dd, yyyy')}"></span>
+                                    </li>
+                                    <li class="list-group-item">Кол-во вопросов: <span
+                                            th:text="${#lists.size(quiz.questions)}"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </section>
+    <footer th:insert="temps::footer"></footer>
+</body>
+
+</html>

@@ -30,6 +30,7 @@ window.onload = function () {
                 groups.forEach((el, j) => {
                     let inputs = el.querySelectorAll('input');
                     inputs[0].name = inputs[0].name.replace(/#/, i);
+                    inputs[0].value = j;
                     inputs[1].name = inputs[1].name.replace(/#/, i).replace(/&/, j);
                 });
                 cardsDiv.append(copy);

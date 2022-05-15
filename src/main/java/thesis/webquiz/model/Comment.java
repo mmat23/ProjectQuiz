@@ -11,10 +11,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "comment")
-public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Comment extends BaseModel {
 
     private String text;
 
@@ -30,4 +27,3 @@ public class Comment {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 }
-

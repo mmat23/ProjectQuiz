@@ -1,12 +1,38 @@
 <header class="bg-dark" th:fragment="header">
     <div class="container">
         <div class="row text-light align-items-center justify-content-between">
-            <div class="col-4">
+            <div class="col-2">
                 <h1>WebQuiz</h1>
             </div>
-            <div class="col-6 text-end">
-                <button class="btn btn-primary">Что-то будет</button>
-            </div>
+            <th:block sec:authorize="isAuthenticated()">
+                <div class="col-6">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a th:href="@{/quiz/myQuizzes}" class="nav-link text-white">
+                                Мои викторины
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/quiz/list}" class="nav-link text-white">
+                                Все викторины
+                            </a>
+                        </li>
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a th:href="@{/admin/users}" class="nav-link text-white">
+                                    Управление пользователями
+                                </a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+                <div class="col-4 text-end">
+                    <i sec:authorize="hasRole('ROLE_USER')" class="bi bi-person-circle align-middle" style="color: white"></i>
+                    <i sec:authorize="hasRole('ROLE_ADMIN')" class="bi bi-person-workspace align-middle" style="color: white"></i>
+                    <a class="align-middle" sec:authentication="name" style="font-size: 0.8rem; color: white; text-decoration: none"></a>
+                    <a class="btn btn-primary" th:href="@{/logout}">Выйти</a>
+                </div>
+            </th:block>
         </div>
     </div>
 </header>
@@ -14,36 +40,7 @@
 <footer class="py-2 bg-dark text-light" th:fragment="footer">
     <div class="container text-center">
         <p class="small">Copyright
-            <script>document.write(new Date().getFullYear())</script> &copy; <a href="#">MM</a>
+            <script>document.write(new Date().getFullYear())</script> &copy; <a href="#">matsock37@yandex.ru</a>
         </p>
     </div>
 </footer>
-
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" th:fragment="admin-navbar">
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li>
-            <a href="#" class="nav-link text-white">
-                Мои викторины
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                Мой профиль
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                Управление пользователями
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                Мои отзывы
-            </a>
-        </li>
-    </ul>
-    <hr>
-    <a href="#" class="nav-link text-white">
-        Выход
-    </a>
-</div>

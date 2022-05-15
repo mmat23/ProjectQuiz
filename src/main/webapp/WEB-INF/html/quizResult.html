@@ -2,10 +2,11 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Результаты | WebQuiz</title>
+    <title>Результаты игры | WebQuiz</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
 </head>
 
@@ -17,8 +18,9 @@
                 <div class="col-6">
                     <div class="card border-2 border-success">
                         <div class="card-body">
-                            <h1>Результаты викторины "<span th:text="${title}"></span>"</h1>
-                            <p><span th:text="${ansRight}"></span>/<span th:text="${count}"></span></p>
+                            <h1>Результаты викторины</h1>
+                            <p>Правильные ответы: <span th:text="${ansRight}"></span></p>
+                            <p>Неправильные ответы: <span th:text="${count - ansRight}"></span></p>
                         </div>
                     </div>
                 </div>

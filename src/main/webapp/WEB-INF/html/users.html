@@ -9,6 +9,7 @@
         href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
     <script type="text/javascript" th:src="@{/resources/js/users.js}"></script>
 </head>
@@ -18,28 +19,30 @@
     <section class="section justify-content-center">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-6">
+                <div class="col-9">
                     <div class="card">
-                        <table id="tab">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>email</th>
-                                    <th>username</th>
-                                    <th>Бан</th>
-                                    <th>Действие</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="user : ${userList}">
-                                    <td th:text="${user.id}">
-                                    <td th:text="${user.email}">
-                                    <td th:text="${user.username}">
-                                    <td th:text="${user.ban} ? 'Да' : 'Нет'">
-                                    <td><a class="btn" th:href="@{/admin/setban(id=${user.id},ban=${user.ban})}" th:value="${user.ban}" th:text="${user.ban} ? 'Разбанить' : 'Забанить'"></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="card-body">
+                            <table id="tab" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Email</th>
+                                        <th>Имя пользователя</th>
+                                        <th>Бан</th>
+                                        <th>Действие</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user : ${userList}">
+                                        <td th:text="${user.id}">
+                                        <td th:text="${user.email}">
+                                        <td th:text="${user.username}">
+                                        <td th:text="${user.ban} ? 'Есть' : 'Нет'">
+                                        <td><a th:class="|btn ${user.ban ? 'btn-success' : 'btn-danger'}|" th:href="@{/admin/setban(id=${user.id},ban=${user.ban})}" th:value="${user.ban}" th:text="${user.ban} ? 'Разбанить' : 'Забанить'" th:if="${#strings.equals(user.role,'USER')}"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

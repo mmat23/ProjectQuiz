@@ -13,11 +13,9 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "user")
-public class QuizUser{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class QuizUser extends BaseModel {
 
+    @Column(unique = true)
     private String email;
 
     private String username;

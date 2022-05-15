@@ -2,11 +2,15 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Авторизация | WebQuiz</title>
+    <title>Викторина | WebQuiz</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+    <script type="text/javascript" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/chart.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/statChart.js}"></script>
 </head>
 
 <body>
@@ -14,34 +18,42 @@
     <section class="section justify-content-center">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-2">
-                    <div th:insert="temps::admin-navbar"></div>
-                </div>
-                <div class="col-10">
+                <div class="col-7">
                     <div class="card my-2">
-                        <div class="card-header" th:text="quiz.title"></div>
+                        <div class="card-header" th:text="${quiz.title}"></div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Автор: <span class="text-primary"
                                         th:text="${quiz.user.username}"></span></li>
-                                <li class="list-group-item">Темы: <span th:text="${quiz.subjects[0].name}"></span>,
-                                    <span th:text="${quiz.subjects[1].name}"></span>
+                                <li class="list-group-item">
+                                    Темы: <span th:text="${#strings.listJoin(quiz.subjects.![name], ', ')}"></span>
                                 </li>
-                                <li class="list-group-item">Рейтинг: <span th:if="${avgRating}" th:text="|${#numbers.formatDecimal(avgRating,1,1)}/5|"><span th:unless="${avgRating}">будет показана поже</span></li>
+                                <li class="list-group-item">
+                                    Дата создания: <span
+                                        th:text="${#temporals.format(quiz.date,'LLLL dd, yyyy')}"></span>
+                                </li>
                                 <li class="list-group-item">Кол-во вопросов: <span
                                         th:text="${#lists.size(quiz.questions)}"></span></li>
-                                <li class="list-group-item"><a class="btn btn-success mx-6">Поехали!</a><a
-                                        class="btn btn-warning">Подробная информация</a></li>
+                                <li class="list-group-item"><p>Описание:</p><p
+                                        th:text="${quiz.description}"></p></li>
+                                <li class="list-group-item">
+                                    <a class="btn btn-success mx-6" th:href="@{/quiz/play(id=${quiz.id})}">Поиграем?</a>
+                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#statModal">Подробная информация</button>
+                                    <a class="btn btn-danger" th:if="${#strings.equals(#authentication.getPrincipal().getUsername(),quiz.user.email)}" th:href="@{/quiz/delete(id=${quiz.id})}">Удалить</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center px-0 mx-0 g-0">
-                        <div class="col-lg-10 w-100">
+                        <div class="col-lg-7 w-100">
                             <div class="card text-dark">
                                 <div class="card-body">
                                     <h4 class="mb-0">Отзывы</h4>
                                     <p class="fw-light mb-4 pb-2">Последние отзывы от пользователей</p>
-                                    <form th:action="@{/makeComment}" method="POST" th:if="${comForm}" th:object="${comForm}">
+                                    <h5 th:if="${#lists.size(quiz.comments) == 0 and comForm == null}">Отзывов пока нет</h5>
+                                    <form th:action="@{/quiz/comment}" method="POST" th:if="${comForm}"
+                                        th:object="${comForm}">
                                         <h5>Оставьте свой отзыв</h5>
                                         <div class="row g-3">
                                             <div>
@@ -59,31 +71,6 @@
                                         </div>
                                     </form>
                                 </div>
-
-                                <hr class="my-0" />
-
-                                <div class="card-body p-4">
-                                    <div class="d-flex flex-start">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">idontknower</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    апрель 1, 2022
-                                                </p>
-                                            </div>
-                                            <p class="mb-0">
-                                                И это называется викториной? да кто автор вообще такой?! викторина
-                                                вообще по своей сути отнюдь не логична. ответы вообще слабо свзязаны с
-                                                вопросами. знание истории бутана (или чего там) у автора вообще не
-                                                зашкаливает. стыдно
-                                            </p>
-                                            <p>0/5</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr class="my-0" />
-
                                 <th:block th:each="com : ${quiz.comments}">
                                     <div class="card-body p-4">
                                         <div class="d-flex flex-start">
@@ -94,56 +81,14 @@
                                                         th:text="${#temporals.format(com.date,'LLLL dd, yyyy')}"></p>
                                                 </div>
                                                 <p class="mb-0" th:text="${com.text}"></p>
-                                                <p th:text="|${#numbers.formatDecimal(com.rating,1,1)}/5|"></p>
+                                                <br>
+                                                <h5>Оценка: <span th:text="|${#numbers.formatDecimal(com.rating,1,1)}/5|"></span></h5>
                                             </div>
                                         </div>
                                     </div>
 
                                     <hr class="my-0" />
                                 </th:block>
-
-                                <div class="card-body p-4">
-                                    <div class="d-flex flex-start">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">admin</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    март 25, 2022
-                                                </p>
-                                            </div>
-                                            <p class="mb-0">
-                                                Эта викторина идеал идеалов из всех шедевров. Знанию истории и чуткости
-                                                автора в вопросах истории Японии и периода Сэнгоку можно лишь
-                                                позавидовать. Эта викторина - вершина логики и организации из всех
-                                                викторин. Рекомендую всем.
-                                            </p>
-                                            <p>5/5</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr class="my-0" />
-
-                                <div class="card-body p-4">
-                                    <div class="d-flex flex-start">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">kolya_nevolya</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    март 27, 2022
-                                                </p>
-                                            </div>
-                                            <p class="mb-0">
-                                                Викторинка норм такая. Я хоть узнал что-то новое об истории японии. Не
-                                                слишком интересно, но норм.
-                                            </p>
-                                            <p>4/5</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr class="my-0" />
-
                             </div>
                         </div>
                     </div>
@@ -151,6 +96,32 @@
             </div>
         </div>
     </section>
+    <div class="modal" id="statModal" tabindex="-1" aria-hidden="true" aria-labelledby="statModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statModalLabel">Статистика</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-5">
+                                <p>Средний рейтинг:
+                                <h5 th:if="${avgRating}" th:text="|${#numbers.formatDecimal(avgRating,1,1)}/5|"></h5>
+                                <span th:unless="${avgRating}">будет показан позже</span></p>
+                                <p>Кол-во прохождений: <span th:text="${quiz.statistics.countPlayed}"></span></p>
+                            </div>
+                            <div class="col-7">
+                                <span id="avgResult" th:text="${quiz.statistics.avgResult}" hidden></span>
+                                <canvas id="statChart" width="50" height="50"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer th:insert="temps::footer"></footer>
 </body>
 

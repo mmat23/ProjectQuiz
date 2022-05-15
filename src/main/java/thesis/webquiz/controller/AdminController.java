@@ -25,6 +25,6 @@ public class AdminController {
     @GetMapping("/setban")
     public String usersList(@RequestParam Long id, @RequestParam Boolean ban) {
         quizUserServ.setBanById(!ban, id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }

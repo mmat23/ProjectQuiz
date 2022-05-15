@@ -9,16 +9,13 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "statistics")
-public class Statistics {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Statistics extends BaseModel {
 
-    private Long countPlayed = (long) 0;
+    private Long countPlayed = (long) 1;
     
-    private Double avgResult = 0.0;
+    private Double avgResult = 1.0;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 }

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Все викторины | WebQuiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.5/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+    <script type="text/javascript" th:src="@{/resources/js/quizzes.js}"></script>
+</head>
+
+<body>
+    <header th:insert="temps::header"></header>
+    <section class="section justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="quizTab" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Темы</th>
+                                        <th>Автор</th>
+                                        <th>Кол-во вопросов</th>
+                                        <th>Дата создания</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="quiz : ${quizzes}">
+                                        <td><a th:text="${quiz.title}" th:href="@{/quiz/show(id=${quiz.id})}"></a></td>
+                                        <td th:text="${#strings.listJoin(quiz.subjects.![name], ', ')}">
+                                        <td th:text="${quiz.user.username}">
+                                        <td th:text="${#lists.size(quiz.questions)}">
+                                        <td th:text="${#temporals.format(quiz.date,'MM.dd.yyyy')}">
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>Темы</th>
+                                        <th>Автор</th>
+                                        <th>Кол-во вопросов</th>
+                                        <th>Дата создания</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer th:insert="temps::footer"></footer>
+</body>
+
+</html>

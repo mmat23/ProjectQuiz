@@ -7,16 +7,14 @@ import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import thesis.webquiz.pattern.*;
 
 
 @Setter
 @Getter
 @Entity
 @Table(name = "question")
-public class Question {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Question extends BaseModel {
 
     private String text;
 
@@ -29,4 +27,8 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<Answer>();
+
+    public static Iterator<Question> iterator(List<Question> questions){
+        return new QuestionCollection(questions).iterator();
+    }
 }

@@ -27,15 +27,20 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .csrf().disable().authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/login", "/signup").hasRole("anonymous")
-                .antMatchers("/**").permitAll()
+                .antMatchers("/login", "/signup").anonymous()
+                .antMatchers("/resources/css/**","/resources/img/**").permitAll()
+                .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
-                .defaultSuccessUrl("/").permitAll()
                 .and().logout().permitAll().logoutSuccessUrl("/");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServ).passwordEncoder(bCryptPasswordEncoder());
+        try {
+            auth.userDetailsService(userDetailsServ).passwordEncoder(bCryptPasswordEncoder());   
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }
